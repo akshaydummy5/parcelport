@@ -2,4 +2,4 @@
 
 cd /home/ubuntu/parcelport
 npm i
-npm build
+npm run build
