@@ -1,0 +1,111 @@
+<div class="row page">
+    <div class="col-lg-12">
+        <h1 class="page-header">Locker</h1>
+    </div>
+    <pp-spinner [isSpinnerLoad]="isDataLoaded"></pp-spinner>
+    <div class="col-lg-12" *ngIf="!isDataLoaded">
+        <form #lockerForm="ngForm"
+              (ngSubmit)="lockerForm.valid && fnSaveLocker(lockerObj)" novalidate>
+            <fieldset class="col-md-12 fieldset">
+                <legend class="fieldset-legend">Basic</legend>
+
+                <div class="form-group"
+                     [ngClass]="{'has-error': (lockerForm.submitted || locker.touched) && !locker.valid}">
+                    <label for="locker">Locker Name<span class="text-danger">*</span></label>
+                    <input id="locker" type="text" class="form-control" name="locker"
+                           placeholder="Enter a locker name"
+                           [(ngModel)]="lockerObj.name" #locker="ngModel" required/>
+                    <div *ngIf="(lockerForm.submitted || locker.touched) && !locker.valid">
+                        <small class="text-danger" *ngIf="locker.errors['required']">Locker name is required.</small>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="col-md-12 fieldset" *ngIf="!lockerObj._id">
+                <legend class="fieldset-legend">Location</legend>
+
+                <div class="form-group"
+                     [ngClass]="{'has-error': (lockerForm.submitted || location.touched) && !location.valid}">
+                    <label for="location">Search Location<span class="text-danger">*</span></label>
+                    <input type="text" id="location" class="form-control" name="location"
+                           [(ngModel)]="lockerObj.formattedAddress"
+                           placeholder="Enter locker address" #location="ngModel" required/>
+                    <div *ngIf="(lockerForm.submitted || location.touched) && !location.valid">
+                        <small class="text-danger" *ngIf="locker.errors['required']">
+                            Locker address is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="street">Street</label>
+                    <div id="street" class="row">
+                        <div class="col-sm-3">
+                            <input class="form-control" name="streetNumber"
+                                   [(ngModel)]="lockerObj.streetNumber"
+                                   placeholder="Enter a street no."
+                                   [disabled]="true" [readonly]="true"/>
+                        </div>
+                        <div class="col-sm-9">
+                            <input class="form-control" name="route"
+                                   [(ngModel)]="lockerObj.route"
+                                   placeholder="Enter a street route."
+                                   [disabled]="true" [readonly]="true"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input id="city" type="text" class="form-control" name="city"
+                           [(ngModel)]="lockerObj.city"
+                           placeholder="Enter a city"
+                           [disabled]="true" [readonly]="true"/>
+                </div>
+                <div class="form-group">
+                    <label for="state">State</label>
+                    <input id="state" type="text" class="form-control" name="state"
+                           [(ngModel)]="lockerObj.state"
+                           placeholder="Enter a state"
+                           [disabled]="true" [readonly]="true"/>
+
+                </div>
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <input id="country" type="text" class="form-control" name="country"
+                           [(ngModel)]="lockerObj.country"
+                           placeholder="Enter a country"
+                           [disabled]="true" [readonly]="true"/>
+                </div>
+                <div class="form-group">
+                    <label for="postalCode">Postal Code</label>
+                    <input id="postalCode" type="text" class="form-control" name="postalCode"
+                           [(ngModel)]="lockerObj.postalCode" placeholder="Enter a postal code"
+                           [disabled]="true" [readonly]="true"/>
+                </div>
+                <div class="form-group">
+                    <label for="latitudeLongitude">Latitude & Longitude</label>
+                    <div id="latitudeLongitude" class="row">
+                        <div class="col-sm-6">
+                            <input class="form-control" name="latitude"
+                                   [(ngModel)]="lockerObj.latitude"
+                                   placeholder="Enter a latitude."
+                                   [disabled]="true" [readonly]="true"/>
+                        </div>
+                        <div class="col-sm-6">
+                            <input class="form-control" name="=longitude"
+                                   [(ngModel)]="lockerObj.longitude"
+                                   placeholder="Enter a longitude."
+                                   [disabled]="true" [readonly]="true"/>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">
+                    {{lockerObj._id ? 'Update Locker' : 'Create Locker'}}
+                </button>
+                <button class="btn btn-warning" [routerLink]="['/lockers']">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>

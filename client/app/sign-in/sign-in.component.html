@@ -1,0 +1,52 @@
+<div class="container m-t-25">
+    <div class="row m-b-25">
+        <div class="col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
+            <img class="img-responsive p-l-25 p-r-25" src="assets/images/pp_logo1.png" alt="Parcel Port" width="100%"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <div class="panel-title text-center"><strong>Sign In</strong></div>
+                </div>
+                <div class="panel-body">
+                    <form #signInForm="ngForm" role="form" (ngSubmit)="signInForm.valid && fnSignIn(signInObj)">
+                        <fieldset>
+                            <div class="form-group"
+                                 [ngClass]="{'has-error': (signInForm.submitted || email.touched) && !email.valid}">
+                                <input class="form-control" placeholder="E-mail" name="email" type="email"
+                                       [(ngModel)]="signInObj.email" #email="ngModel"
+                                       pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" required/>
+                                <div *ngIf="(signInForm.submitted || email.touched) && !email.valid">
+                                    <small class="text-danger" *ngIf="email.errors['required']">
+                                        Email is required.
+                                    </small>
+                                    <small class="text-danger" *ngIf="email.errors['pattern']">
+                                        Email is invalid.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group"
+                                 [ngClass]="{'has-error': (signInForm.submitted || password.touched) && !password.valid}">
+                                <input class="form-control" placeholder="Password" name="password" type="password"
+                                       [(ngModel)]="signInObj.password" #password="ngModel" required/>
+                                <div *ngIf="(signInForm.submitted || password.touched) && !password.valid">
+                                    <small class="text-danger" *ngIf="password.errors['required']">
+                                        Password is required.
+                                    </small>
+                                </div>
+                            </div>
+                            <!-- Change this to a button or input when using this as a form -->
+                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="panel-footer text-center">
+                    <a href="javascript:void(0);">Forgot password</a> |
+                    <a href="javascript:void(0);">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

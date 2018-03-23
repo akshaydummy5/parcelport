@@ -1,0 +1,119 @@
+<div class="row page">
+    <div class="col-lg-12">
+        <h1 class="page-header">User</h1>
+    </div>
+    <pp-spinner [isSpinnerLoad]="isDataLoaded"></pp-spinner>
+    <div class="col-lg-12" *ngIf="!isDataLoaded">
+        <form #userForm="ngForm"
+              (ngSubmit)="userForm.valid && fnSaveUser(userObj)" novalidate>
+            <fieldset class="col-md-12 fieldset">
+                <legend class="fieldset-legend">Basic</legend>
+
+                <div class="form-group" *ngIf="currentUser.role === 'ADMIN'"
+                     [ngClass]="{'has-error': (userForm.submitted || company.touched) && !company.valid}">
+                    <label for="company">Select company<span class="text-danger">*</span></label>
+                    <select id="company" class="form-control" name="company" [(ngModel)]="userObj.companyId"
+                            #company="ngModel" required>
+                        <option [ngValue]="item._id" *ngFor="let item of companiesArr">{{item.company}}</option>
+                    </select>
+                    <div *ngIf="(userForm.submitted || company.touched) && !company.valid">
+                        <small class="text-danger" *ngIf="company.errors.required">Company is required.</small>
+                    </div>
+                </div>
+                <div class="form-group"
+                     [ngClass]="{'has-error': (userForm.submitted || firstName.touched) && !firstName.valid}">
+                    <label for="firstName">First Name<span class="text-danger">*</span></label>
+                    <input id="firstName" type="text" class="form-control" name="firstName"
+                           placeholder="Enter a first name"
+                           [(ngModel)]="userObj.firstName" #firstName="ngModel" required/>
+                    <div *ngIf="(userForm.submitted || firstName.touched) && !firstName.valid">
+                        <small class="text-danger" *ngIf="firstName.errors.required">First name is required.</small>
+                    </div>
+                </div>
+                <div class="form-group"
+                     [ngClass]="{'has-error': (userForm.submitted || lastName.touched) && !lastName.valid}">
+                    <label for="lastName">Last Name<span class="text-danger">*</span></label>
+                    <input id="lastName" type="text" class="form-control" name="lastName"
+                           placeholder="Enter a last name"
+                           [(ngModel)]="userObj.lastName" #lastName="ngModel" required/>
+                    <div *ngIf="(userForm.submitted || lastName.touched) && !lastName.valid">
+                        <small class="text-danger" *ngIf="lastName.errors.required">Last name is required.</small>
+                    </div>
+                </div>
+                <div class="form-group"
+                     [ngClass]="{'has-error': (userForm.submitted || email.touched) && !email.valid}">
+                    <label for="email">Email<span class="text-danger">*</span></label>
+                    <input id="email" type="email" class="form-control" name="email"
+                           placeholder="Enter a email"
+                           [(ngModel)]="userObj.email" #email="ngModel"
+                           pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" required/>
+                    <div *ngIf="(userForm.submitted || email.touched) && !email.valid">
+                        <small class="text-danger" *ngIf="email.errors.required">Email is required.</small>
+                        <small class="text-danger" *ngIf="email.errors.pattern">Email is invalid.</small>
+                    </div>
+                </div>
+                <div class="form-group"
+                     [ngClass]="{'has-error': (userForm.submitted || phone.touched) && !phone.valid}">
+                    <label for="phone">Phone<span class="text-danger">*</span></label>
+                    <input id="phone" type="phone" class="form-control" name="phone"
+                           placeholder="Enter a phone"
+                           [(ngModel)]="userObj.phone" #phone="ngModel"
+                           required/>
+                    <div *ngIf="(userForm.submitted || phone.touched) && !phone.valid">
+                        <small class="text-danger" *ngIf="phone.errors.required">Phone is required.</small>
+                    </div>
+                </div>
+                <div class="form-group" *ngIf="currentUser.role === 'ADMIN'"
+                     [ngClass]="{'has-error': (userForm.submitted || role.touched) && !role.valid}">
+                    <label for="role">Select role<span class="text-danger">*</span></label>
+                    <select id="role" class="form-control" name="role" [(ngModel)]="userObj.role"
+                            #role="ngModel" required>
+                        <option value="">Select Role</option>
+                        <option value="COMPANY">COMPANY</option>
+                        <option value="USER">USER</option>
+                    </select>
+                    <div *ngIf="(userForm.submitted || role.touched) && !role.valid">
+                        <small class="text-danger" *ngIf="role.errors.required">Role is required.</small>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="col-md-12 fieldset" *ngIf="!userObj._id">
+                <legend class="fieldset-legend">Password</legend>
+
+                <div class="form-group"
+                     [ngClass]="{'has-error': (userForm.submitted || password.touched) && !password.valid}">
+                    <label for="password">Password<span class="text-danger">*</span></label>
+                    <input id="password" type="password" class="form-control" name="password"
+                           placeholder="Enter a password"
+                           [(ngModel)]="userObj.password" #password="ngModel" required/>
+                    <div *ngIf="(userForm.submitted || password.touched) && !password.valid">
+                        <small class="text-danger" *ngIf="password.errors.required">Password is required.</small>
+                    </div>
+                </div>
+                <div class="form-group"
+                     [ngClass]="{'has-error': (userForm.submitted || cPassword.touched) && !cPassword.valid}">
+                    <label for="cPassword">Confirm Password<span class="text-danger">*</span></label>
+                    <input id="cPassword" type="password" class="form-control" name="cPassword"
+                           placeholder="Enter a confirm password"
+                           [(ngModel)]="confirmPassword" #cPassword="ngModel" required/>
+                    <div *ngIf="(userForm.submitted || cPassword.touched) && !cPassword.valid">
+                        <small class="text-danger" *ngIf="cPassword.errors.required">Confirm Password is required.
+                        </small>
+                    </div>
+                    <div *ngIf="(userForm.submitted || cPassword.touched) && cPassword.valid">
+                        <small class="text-danger" *ngIf="userObj.password !== confirmPassword">Password doesn't match.
+                        </small>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">
+                    {{userObj._id ? 'Update User' : 'Create User'}}
+                </button>
+                <button class="btn btn-warning" [routerLink]="['/users']">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>

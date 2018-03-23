@@ -1,0 +1,50 @@
+<div class="row page">
+    <div class="col-lg-12">
+        <h1 class="page-header ">Users
+            <button class="pull-right btn btn-primary" [routerLink]="['/users/add']">
+                <i class="fa fa-plus"></i> <span class="hidden-xs">New User</span>
+            </button>
+        </h1>
+    </div>
+    <pp-spinner [isSpinnerLoad]="!isDataLoaded"></pp-spinner>
+    <div class="col-lg-12" *ngIf="isDataLoaded">
+        <div class="table-responsive" *ngIf="usersArr.length">
+            <table>
+                <thead>
+                <tr>
+                    <th class="bg-primary">First Name</th>
+                    <th class="bg-primary">Last Name</th>
+                    <th class="bg-primary">Email</th>
+                    <th class="bg-primary">Phone</th>
+                    <th class="bg-primary">Drop Code</th>
+                    <th class="bg-primary">Role</th>
+                    <th class="bg-primary">Company</th>
+                    <th class="bg-primary">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let user of usersArr">
+                    <td>{{user.firstName ? user.firstName : 'NONE'}}</td>
+                    <td>{{user.lastName ? user.lastName : 'NONE'}}</td>
+                    <td>{{user.email ? user.email : 'NONE'}}</td>
+                    <td>{{user.phone ? user.phone : 'NONE'}}</td>
+                    <td>{{user.code ? user.code : 'NONE'}}</td>
+                    <td>{{user.role ? user.role : 'NONE'}}</td>
+                    <td>{{user.companyId ? user.companyId['company'] : 'NONE'}}</td>
+                    <td>
+                        <div class="btn-group btn-group-sm" *ngIf="fnCheckUserRoleForEdit(user.role)">
+                            <button type="button" class="btn btn-primary" [routerLink]="['/users/'+user._id]">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger" (click)="fnDeleteUser(user._id)">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <h3 *ngIf="!usersArr.length" class="text-center">No users found.</h3>
+    </div>
+</div>

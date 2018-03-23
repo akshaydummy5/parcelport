@@ -1,0 +1,130 @@
+<div class="row page">
+    <div class="col-lg-12">
+        <h1 class="page-header">Company</h1>
+    </div>
+    <pp-spinner [isSpinnerLoad]="isDataLoaded"></pp-spinner>
+    <div class="col-lg-12" *ngIf="!isDataLoaded">
+        <form #companyForm="ngForm"
+              (ngSubmit)="companyForm.valid && fnSaveCompany(companyObj)" novalidate>
+            <fieldset class="col-md-12 fieldset">
+                <legend class="fieldset-legend">Basic</legend>
+
+                <div class="form-group"
+                     [ngClass]="{'has-error': (companyForm.submitted || company.touched) && !company.valid}">
+                    <label for="company">Company Name<span class="text-danger">*</span></label>
+                    <input id="company" type="text" class="form-control" name="company"
+                           placeholder="Enter a company name"
+                           [(ngModel)]="companyObj.company" #company="ngModel" required/>
+                    <div *ngIf="(companyForm.submitted || company.touched) && !company.valid">
+                        <small class="text-danger" *ngIf="company.errors.required">Company name is required.</small>
+                    </div>
+                </div>
+                <div class="form-group" *ngIf="!companyObj._id"
+                     [ngClass]="{'has-error': (companyForm.submitted || firstName.touched) && !firstName.valid}">
+                    <label for="firstName">First Name<span class="text-danger">*</span></label>
+                    <input id="firstName" type="text" class="form-control" name="firstName"
+                           placeholder="Enter a representative first name"
+                           [(ngModel)]="companyObj.firstName" #firstName="ngModel" required/>
+                    <div *ngIf="(companyForm.submitted || firstName.touched) && !firstName.valid">
+                        <small class="text-danger" *ngIf="firstName.errors.required">First name is required.</small>
+                    </div>
+                </div>
+                <div class="form-group" *ngIf="!companyObj._id"
+                     [ngClass]="{'has-error': (companyForm.submitted || lastName.touched) && !lastName.valid}">
+                    <label for="lastName">Last Name<span class="text-danger">*</span></label>
+                    <input id="lastName" type="text" class="form-control" name="lastName"
+                           placeholder="Enter a representative last name"
+                           [(ngModel)]="companyObj.lastName" #lastName="ngModel" required/>
+                    <div *ngIf="(companyForm.submitted || lastName.touched) && !lastName.valid">
+                        <small class="text-danger" *ngIf="lastName.errors.required">Last name is required.</small>
+                    </div>
+                </div>
+                <div class="form-group" *ngIf="!companyObj._id"
+                     [ngClass]="{'has-error': (companyForm.submitted || email.touched) && !email.valid}">
+                    <label for="email">Email<span class="text-danger">*</span></label>
+                    <input id="email" type="email" class="form-control" name="email"
+                           placeholder="Enter a valid email"
+                           [(ngModel)]="companyObj.email" #email="ngModel"
+                           pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" required/>
+                    <div *ngIf="(companyForm.submitted || email.touched) && !email.valid">
+                        <small class="text-danger" *ngIf="email.errors.required">Email is required.</small>
+                        <small class="text-danger" *ngIf="email.errors.pattern">Email is invalid.</small>
+                    </div>
+                </div>
+                <div class="form-group" *ngIf="!companyObj._id"
+                     [ngClass]="{'has-error': (companyForm.submitted || phone.touched) && !phone.valid}">
+                    <label for="phone">Phone<span class="text-danger">*</span></label>
+                    <input id="phone" type="text" class="form-control" name="phone"
+                           placeholder="Enter a valid phone"
+                           [(ngModel)]="companyObj.phone" #phone="ngModel"
+                           required/>
+                    <div *ngIf="(companyForm.submitted || phone.touched) && !phone.valid">
+                        <small class="text-danger" *ngIf="phone.errors.required">Phone is required.</small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" class="form-control" name="address" [(ngModel)]="companyObj.address1"
+                              placeholder="Enter a address"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input id="city" type="text" class="form-control" name="city" [(ngModel)]="companyObj.city"
+                           placeholder="Enter a city"/>
+                </div>
+                <div class="form-group">
+                    <label for="state">State</label>
+                    <input id="state" type="text" class="form-control" name="state" [(ngModel)]="companyObj.state"
+                           placeholder="Enter a state"/>
+                </div>
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <input id="country" type="text" class="form-control" name="country" [(ngModel)]="companyObj.country"
+                           placeholder="Enter a country"/>
+                </div>
+                <div class="form-group">
+                    <label for="postalCode">Postal Code</label>
+                    <input id="postalCode" type="text" class="form-control" name="postalCode"
+                           [(ngModel)]="companyObj.postalCode" placeholder="Enter a postal code"/>
+                </div>
+            </fieldset>
+
+            <fieldset class="col-md-12 fieldset" *ngIf="!companyObj._id">
+                <legend class="fieldset-legend">Password</legend>
+
+                <div class="form-group"
+                     [ngClass]="{'has-error': (companyForm.submitted || password.touched) && !password.valid}">
+                    <label for="password">Password<span class="text-danger">*</span></label>
+                    <input id="password" type="password" class="form-control" name="password"
+                           placeholder="Enter a password"
+                           [(ngModel)]="companyObj.password" #password="ngModel" required/>
+                    <div *ngIf="(companyForm.submitted || password.touched) && !password.valid">
+                        <small class="text-danger" *ngIf="password.errors.required">Password is required.</small>
+                    </div>
+                </div>
+                <div class="form-group"
+                     [ngClass]="{'has-error': (companyForm.submitted || cPassword.touched) && !cPassword.valid}">
+                    <label for="cPassword">Confirm Password<span class="text-danger">*</span></label>
+                    <input id="cPassword" type="password" class="form-control" name="cPassword"
+                           placeholder="Enter a confirm password"
+                           [(ngModel)]="confirmPassword" #cPassword="ngModel" required/>
+                    <div *ngIf="(companyForm.submitted || cPassword.touched) && !cPassword.valid">
+                        <small class="text-danger" *ngIf="cPassword.errors.required">Confirm Password is required.
+                        </small>
+                    </div>
+                    <div *ngIf="(companyForm.submitted || cPassword.touched) && cPassword.valid">
+                        <small class="text-danger" *ngIf="companyObj.password !== confirmPassword">Password doesn't match.
+                        </small>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">
+                    {{companyObj._id ? 'Update Company' : 'Create Company'}}
+                </button>
+                <button class="btn btn-warning" [routerLink]="['/companies']">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
